@@ -254,6 +254,7 @@ body {
 }
 .footer .friendly a{
     display: inline-block;
+    margin-right: 5px;
 }
 .guding{
     position: absolute;
