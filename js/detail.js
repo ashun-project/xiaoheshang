@@ -155,7 +155,7 @@ function reset() {
         obj.nav = mySpare.querySelector('.class-feed-btn2');
         obj.navM = mySpare.querySelector('.nav__btn--wrap li ul');
         obj.tuijian = mySpare.querySelectorAll('.col-sm-3.col-xs-6 a');
-        obj.tuijianM = tuijian = mySpare.querySelectorAll('.video__wrap a');
+        obj.tuijianM = mySpare.querySelectorAll('.video__wrap a');
         tuijianWrap.innerHTML = '';
         for (var key in obj) {
             if (obj[key]) {

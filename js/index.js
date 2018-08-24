@@ -103,7 +103,10 @@ function search () {
         error: function () {   
             alert('搜索失败');
         }
-    })
+    });
+    event.cancelBubble = true;
+    event.stopPropagation();
+    event.preventDefault();
 }
 // 去除元素
 function reset() {

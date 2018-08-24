@@ -501,7 +501,9 @@ body{
         color: #fff;
         font-size: 14px;
         margin: 0;
-        
+    }
+    .search button:active{
+        background: #f7a2a2;
     }
     .notice-message {
         height: 30px;
