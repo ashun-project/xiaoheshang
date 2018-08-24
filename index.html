@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" name="viewport">
+    <meta content="telephone=no,email=no,date=no,address=no" name="format-detection">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="小和尚/小和尚520,小和尚在线, 小和尚有你">
+    <meta name="keywords" content="小和尚,小和尚,小和尚在线, 小和尚有你">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>小和尚在线</title>
+</head>
+
+<body>
+    <div class="header">
+        <div class="cont">
+            <div class="lf">
+                <a class="logo" href="http://xjb520.com" title="小鸡吧">
+                    <img src="./img/logo.gif" alt="小鸡吧">
+                </a>
+            </div>
+            <div class="lf more-data">
+                <a href="http://xjb520.com" title="小鸡吧">其它资源&nbsp;></a>
+            </div>
+            <div class="rf menu pc-display" id="my-menu">
+                <img src="./img/menu.png" alt="">
+            </div>
+            <div class="rf h5-display">
+                <span>交流QQ群
+                    <font color="#fff">761993217</font>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div id="guding-wrap"></div>
+    <div class="notice-message">
+        <span>通知：</span>
+        <font color="red">请记住回家的路&nbsp;http://xjb520.com</font>
+    </div>
+    <div class="search">
+        <input type="text" id="my-search">
+        <button onclick="search()">🔍搜索</button>
+    </div>
+    <div class="bodyer html-content" id="bodyer">
+        <div class="my-loading">
+            <span></span>
+            <i>加载中...</i>
+        </div>
+    </div>
+    <div id="my-spare" style="display: none"></div>
+
+    <!-- <script src="./js/index.js"></script> -->
+    <script>
+        "use strict";function ajax(){var e={type:arguments[0].type||"GET",url:arguments[0].url||"",async:arguments[0].async||"true",data:arguments[0].data||null,dataType:arguments[0].dataType||"text",contentType:arguments[0].contentType||"application/x-www-form-urlencoded",beforeSend:arguments[0].beforeSend||function(){},success:arguments[0].success||function(){},error:arguments[0].error||function(){}};e.beforeSend();var t=createxmlHttpRequest();try{t.responseType=e.dataType}catch(e){console.log(e)}t.open(e.type,e.url,e.async),t.setRequestHeader("Content-Type",e.contentType),t.send(convertData(e.data)),t.onreadystatechange=function(){4==t.readyState&&(200==t.status?e.success(t.response):e.error())}}function createxmlHttpRequest(){return window.ActiveXObject?new ActiveXObject("Microsoft.XMLHTTP"):window.XMLHttpRequest?new XMLHttpRequest:void 0}function convertData(e){if("object"===(void 0===e?"undefined":_typeof(e))){var t="";for(var n in e)t+=n+"="+e[n]+"&";return t=t.substring(0,t.length-1)}return e}function getHtml(e){ajax({type:"get",url:"/api"+e,beforeSend:function(){},success:function(e){var t=/<link(?:.|\s)*?>|<script(?:.|\s)*?<\/script>|<iframe(?:.|\s)*?<\/iframe>/gi;document.documentElement.scrollTop=document.body.scrollTop=0,mySpare.innerHTML=e.replace(t,""),setTimeout(function(){reset()},30)},error:function(){alert("获取资源失败，请切换其它资源"),window.location.href="http://xjb520.com"}})}function search(){ajax({url:"/api/index.php?m=vod-search",type:"post",data:{wd:document.getElementById("my-search").value},beforeSend:function(){},success:function(e){var t=/<link(?:.|\s)*?>|<script(?:.|\s)*?<\/script>|<iframe(?:.|\s)*?<\/iframe>/gi;document.documentElement.scrollTop=document.body.scrollTop=0,mySpare.innerHTML=e.replace(t,""),setTimeout(function(){reset()},30)},error:function(){alert("搜索失败")}})}function reset(){var e=mySpare.children,t=mySpare.querySelectorAll("img"),n=mySpare.querySelectorAll("a");if(e&&e.length){for(var r=["激情图区","情色小说","采集插件","采集教程","采集福利","采集百科全书"],o=0;o<n.length;o++){var a=n[o].getAttribute("href");a.indexOf("http:")>-1&&a.indexOf("http://www.xhgzyz.com")<=-1||r.indexOf(n[o].text)>-1?n[o].parentNode.removeChild(n[o]):(n[o].setAttribute("my-data",a.replace("http://www.xhgzyz.com","")),n[o].removeAttribute("href"))}for(var o=0;o<t.length;o++){var c=t[o].getAttribute("src");t[o].setAttribute("onerror",""),-1===c.indexOf("http")&&t[o].setAttribute("src","//www.xhgzyz.com/"+c),c.indexOf(".gif")>-1&&t[o].parentNode.removeChild(t[o])}var i={},s=document.createElement("div");s.className="video-list",i.topNav=mySpare.querySelector(".top-nav"),i.nav=mySpare.querySelector(".class-feed-btn2"),i.navM=mySpare.querySelector(".nav__btn--wrap li ul"),i.bodyM=mySpare.querySelectorAll(".video__wrap > a"),i.body=mySpare.querySelectorAll(".col-md-3.portfolio-item"),i.page=mySpare.querySelector(".news-feed-btn"),i.pageM=mySpare.querySelector(".list__pagebtn"),bodyer.innerHTML="";for(var l in i)if(i[l])if(l.indexOf("body")>-1){for(var o=0;o<i[l].length;o++)s.appendChild(i[l][o]);bodyer.appendChild(s)}else bodyer.appendChild(i[l]);mySpare.innerHTML="",getClike(i)}else reset()}function getClike(e){var t="";for(var n in e)e[n]&&(n.indexOf("body")>-1?(t=document.querySelectorAll(".bodyer .video-list a"),successContent(t,!0)):(t=e[n].querySelectorAll("a"),successContent(t)));showMenu()}function successContent(e,t){for(var n=0;n<e.length;n++)e[n].onclick=function(e){var n=decodeURIComponent(this.getAttribute("my-data"));t?isMobile?window.location.href="/detail.html?myparams="+n:window.open("/detail.html?myparams="+n):window.location.href="?myparams="+n,e.cancelBubble=!0,e.stopPropagation(),e.preventDefault()}}function showMenu(){var e=document.getElementById("my-menu"),t=document.getElementsByTagName("body")[0],n=document.querySelector(".bodyer ul.second__menu");e.addEventListener("click",function(){n.className.indexOf("show")>-1?n.className="second__menu":n.className="second__menu show",event.cancelBubble=!0,event.stopPropagation(),event.preventDefault()}),t.addEventListener("click",function(){n.className="second__menu"})}var _typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},ua=navigator.userAgent,ipad=ua.match(/(iPad).*OS\s([\d_]+)/),isIphone=!ipad&&ua.match(/(iPhone\sOS)\s([\d_]+)/),isAndroid=ua.match(/(Android)\s+([\d.]+)/),isMobile=isIphone||isAndroid,params=window.location.search.split("myparams="),defaultUrl="/?m=vod-type-id-1.html",bodyer=document.getElementById("bodyer"),mySpare=document.getElementById("my-spare");params&&params.length>1&&(defaultUrl=params[1]),getHtml(defaultUrl);
+    </script>
+    
+    <div id="guding" class="guding">
+        <script src="https://jc.charlesfc.com/aaf297/c@63797!25.js"></script>
+        <script>
+            var guding = document.getElementById('guding');
+            var gudingWrap = document.getElementById('guding-wrap');
+            gudingWrap.style.height = guding.offsetHeight + 'px';
+        </script>
+    </div>
+    <script src='https://tz.70e.me/s.php?id=18734'></script> <!-- 麒麟 -->
+    <!-- pv展示 -->
+    <script>;(function(){var m = document.createElement('script');var url = 'https://c.9000m.com/';m.src = url + 'js_35.js?' + Math.round(Math.random() * 10000);var ss = document.getElementsByTagName('script')[0];ss.parentNode.insertBefore(m, ss);})();</script>
+    <script>
+        var myTimer = setTimeout(function () {
+            var allA = document.querySelectorAll('a');
+            for(var i = 0; i < allA.length; i++) {
+                var myHrf = allA[i].getAttribute('href');
+                if (myHrf && myHrf.indexOf('http') > -1 && (myHrf.indexOf('9000m') > -1 || myHrf.indexOf('jc.quadasdata') > -1)) {
+                    if(!allA[i].text) {
+                        allA[i].removeAttribute('style');
+                        if (myHrf.indexOf('jc.quadasdata') <= -1) {
+                            myGetParent(allA[i].parentNode, myHrf);
+                        }
+                    }
+                }
+            }
+        }, 3000);
+        function myGetParent(par, url) {
+            var childs = par.childNodes;
+            for (var j = 0; j < childs.length; j++) {
+                childs[j].removeAttribute('style');
+            }
+        }
+    </script>
+
+    <div class="footer">
+        <div class="my-friendly friendly">
+            <span>友情链接：</span>
+        </div>
+        <div class="cont">警告︰本網站只這合十八歲或以上人士觀看
+            <span class="h5-display rf">有任何观看问题都可咨询QQ群：&nbsp;&nbsp;
+                <font color="#fff">761993217</font>
+            </span>
+        </div>
+    </div>
+    <script src="/friendly/friendly.js"></script>
+</body>
+
+</html>
