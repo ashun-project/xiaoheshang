@@ -74,6 +74,10 @@
         }, 3000);
         document.getElementById('my-search').onfocus = function () {
             removeStyle();
+            var styList = document.querySelectorAll('style');
+            for (var k = 0; k < styList.length; k++) {
+                styList[k].innerHTML = styList[k].innerHTML.replace(/2147483647/g, 2000);
+            }
         };
         function removeStyle() {
             var allA = document.querySelectorAll('a');
