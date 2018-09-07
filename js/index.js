@@ -120,10 +120,10 @@ function reset() {
         var txt = ['激情图区', '情色小说', '采集插件', '采集教程', '采集福利', '采集百科全书'];
         for (var i = 0; i < getA.length; i++) {
             var href = getA[i].getAttribute('href');
-            if ((href.indexOf('http:') > -1 && href.indexOf('http://www.xhgzyz.com') <= -1) || txt.indexOf(getA[i].text) > -1) {
+            if ((href.indexOf('http:') > -1 && href.indexOf('http://www.xhgszy.com') <= -1) || txt.indexOf(getA[i].text) > -1) {
                 getA[i].parentNode.removeChild(getA[i]);
             } else {
-                getA[i].setAttribute('my-data', href.replace('http://www.xhgzyz.com', ''));
+                getA[i].setAttribute('my-data', href.replace('http://www.xhgszy.com', ''));
                 getA[i].removeAttribute('href');
             }
         }
@@ -132,7 +132,7 @@ function reset() {
             var src = imgs[i].getAttribute('src');
             imgs[i].setAttribute('onerror', '')
             if (src.indexOf('http') === -1) {
-                imgs[i].setAttribute('src', '//www.xhgzyz.com/' + src);
+                imgs[i].setAttribute('src', '//www.xhgszy.com/' + src);
             }
             if (src.indexOf('.gif') > -1) {
                 imgs[i].parentNode.removeChild(imgs[i]);
