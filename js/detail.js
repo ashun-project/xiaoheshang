@@ -104,7 +104,7 @@ function getUrl (url) {
     if (url.indexOf('https') > -1) {
         var $iframe = document.createElement('iframe');
         var $video = document.getElementById('video');
-        $iframe.src = "https://api.xhgzyz.com/m3u8.php?url=" + url;
+        $iframe.src = "https://api.xhgzyck.com/m3u8.php?url=" + url;
         $video.appendChild($iframe);
     } else {
         var videoObject = {
