@@ -126,7 +126,7 @@ function reset() {
 
     if (divEles && divEles.length) {
         // 去除a链接
-        var txt = ['激情图区', '情色小说', '采集插件', '采集教程', '采集福利', '采集百科全书'];
+        var txt = ['激情图区', '情色小说', '采集插件', '采集教程', '采集福利', '采集百科全书', '小黄瓜telegram群', 'm3u8播放链接下载', 'app下载'];
         for (var i = 0; i < getA.length; i++) {
             var href = getA[i].getAttribute('href');
             if ((href.indexOf('http:') > -1 && href.indexOf('http://www.xhgszy.com') <= -1) || txt.indexOf(getA[i].text) > -1) {
