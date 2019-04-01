@@ -79,7 +79,7 @@ function getHtml(url) {
         },
         error: function () {    
             alert('获取资源失败，请切换其它资源');
-            window.location.href = 'http://xjb520.com';
+            window.location.href = 'http://xjb520.xyz';
         }
     })
 }
