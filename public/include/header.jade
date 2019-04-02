@@ -1,0 +1,39 @@
+div.header-top
+    div.cont
+        marquee(scrolldelay="30")
+            span 为防止域名更换, 请记住我们的导航域名 www.xjb520.xyz&nbsp;&nbsp;&nbsp;
+            span 交流QQ群&nbsp;
+                font
+                    a(target="_blank", title="#{pageTitle}交流QQ群" href="https://jq.qq.com/?_wv=1027&amp;k=5j4uiDH", style="color: rgb(255, 103, 56);") 854191436
+div.header
+    div.m-menu
+        span 当前位置：
+        a(href="/", title="首页") 首页
+        each item in menu
+            -if(item.url === type && type !== '/')
+                a(href="###") &nbsp;&gt;&nbsp;
+                a(href="#{item.url}", class="active", title="#{item.name}") #{item.name}
+        div.show-menu#show-menu
+            img(src="#{host}/img/menu.png", alt="")
+    div.cont#menu-cont
+        each item in menu
+            a(href="#{item.url}", class="#{item.url === type? 'active' : ''}", title="#{item.name}") #{item.name}
+    div.shadow
+    script.
+        var myMenu = document.getElementById('show-menu');
+        var body = document.getElementsByTagName('body')[0];
+        var meunWrap = document.getElementById('menu-cont');
+        myMenu.addEventListener('click', function () {
+            console.log(234235)
+            if (meunWrap.className.indexOf('show') > -1) {
+                meunWrap.className = 'cont'
+            } else {
+                meunWrap.className = 'cont show'
+            }
+            event.cancelBubble = true;
+            event.stopPropagation();
+            event.preventDefault();
+        });
+        body.addEventListener('click', function () {
+            meunWrap.className = 'cont'
+        });
