@@ -21,6 +21,8 @@ div.header
     div.cont#menu-cont
         each item in menu
             a(href="#{item.url}", class="#{item.url === type? 'active' : ''}", title="#{item.name}") #{item.name}
+        -if(host.indexOf('app') === -1)
+            a(href="#{host}/app/andriod.apk") 安卓app下载
     div.shadow
     script.
         var myMenu = document.getElementById('show-menu');

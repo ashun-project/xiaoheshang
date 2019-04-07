@@ -24,6 +24,7 @@ html
                 -if(video)
                     input(id="video-url", type="hidden", value="#{video}")
                     div#video
+                    p.ug-down 部分浏览器无法播放，推荐下载chrome浏览器观看
                 -else
                     a(href="#{host}", class="no-more" title="返回首页") 没有查询到数据，返回首页？
         script(src="#{host}/js/ckplayer/ckplayer.js")

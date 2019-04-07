@@ -281,6 +281,10 @@ body{
 .guanggao img{
     max-width: 100%;
 }
+.ug-down{
+    line-height: 30px;
+    color: #00BCD4;
+}
 @media screen and (max-width: 1200px) {
     .search .search-cont{
         padding: 10px 8px;

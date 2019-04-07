@@ -46,6 +46,16 @@ var pool = mysql.createPool({
     database: 'xiaoheshang'
 });
 
+// 缩略图
+// const command = `ffmpeg -i ${input} -r 1 -s WxH -f image2 ${output} -vframes 1`;
+//     return new Promise((resolve,reject)=>{
+//         exec(command, (error, stdout, stderr) => {
+//         if(error) return reject(error);
+//         if(stderr) return reject(stderr);
+//         resolve(output);
+//         });
+//     })
+
 // 路由拦截
 router.all('*', function (req, res, next) {
     var userAgent = req.headers["user-agent"] || '';
@@ -62,7 +72,7 @@ router.all('*', function (req, res, next) {
 })
 // 首页
 router.get('/', function (req, res) {
-    var sql = 'select a.* from (select * from list_data where type = "guochangmingren" order by id desc limit 4) a union all select b.* from (select * from list_data where type = "qingse" order by id desc limit 4) b union all select c.* from (select * from list_data where type = "renqi" order by id desc limit 4) c';
+    var sql = 'select a.* from (select * from list_data where type = "youma" order by id desc limit 4) a union all select b.* from (select * from list_data where type = "oumei" order by id desc limit 4) b union all select c.* from (select * from list_data where type = "dongman" order by id desc limit 4) c';
     pool.getConnection(function (err, conn) {
         if (err) console.log("POOL-index ==> " + err);
         conn.query(sql, function (err, result) {
@@ -80,18 +90,18 @@ router.get('/', function (req, res) {
                 res.render('index', listObj);
             } else {
                 var obj = {
-                    guochangmingren: [],
-                    qingse: [],
-                    renqi: [],
+                    youma: [],
+                    oumei: [],
+                    dongman: [],
                 }
                 var arr = [];
                 for (var i = 0; i < result.length; i++) {
                     obj[result[i].type].push(result[i]);
                 }
                 arr = [
-                    {type: 'guochangmingren', list: obj.guochangmingren, name: '国产名人'},
-                    {type: 'qingse', list: obj.qingse, name: '韩国情色'},
-                    {type: 'renqi', list: obj.renqi, name: '娇妻素人'}
+                    {type: 'youma', list: obj.youma, name: '日本有码'},
+                    {type: 'oumei', list: obj.oumei, name: '欧美性爱'},
+                    {type: 'dongman', list: obj.dongman, name: '动漫卡通'}
                 ]
                 listObj.result = arr;
                 res.render('index', listObj);
