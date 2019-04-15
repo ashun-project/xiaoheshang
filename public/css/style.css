@@ -283,7 +283,17 @@ body{
 }
 .ug-down{
     line-height: 30px;
+    width: 100%;
     color: #00BCD4;
+}
+h3.suiji{
+    color: #fff;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-left: 3px solid #fff;
+    padding-left: 10px;
+    height: 18px;
+    line-height: 18px;
 }
 @media screen and (max-width: 1200px) {
     .search .search-cont{
@@ -330,6 +340,9 @@ body{
     }
     .footer{
         font-size: 12px;
+    }
+    h3.suiji{
+        margin: 0 5px;
     }
 }
 @media screen and (max-width: 500px) {

@@ -249,8 +249,13 @@ router.get('/videos/detail/:id', function (req, res) {
                     listObj.video = 'http' + video;
                     listObj.type = '/videos/'+result[0].type+'/';
                     listObj.pageTitle = result[0].title;
-                    res.render('detail', listObj);
-                    conn.release();
+                    var reNum = Math.floor(Math.random()*(1 - 1000) + 1000);
+                    var recommondSql = 'SELECT * FROM list_data order by id desc limit ' + (reNum + ',' + 4);
+                    conn.query(recommondSql, function (err, recommondResult) {
+                        listObj.recommond = recommondResult;
+                        res.render('detail', listObj);
+                        conn.release();
+                    })
                 } else{
                     res.render('detail', listObj);
                 }
