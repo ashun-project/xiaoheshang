@@ -33,7 +33,8 @@ html
                     each item in recommond
                         a(href="#{host+'/videos/detail/'+item.id}", title="#{item.title}在线观看", target="_blank")
                             div.list-img
-                                img(src="#{item.img}", alt="#{item.title}")
+                                - var img = item.img.indexOf('http') > -1 ? item.img : 'https://p2.lw0703.com'+ item.img;
+                                img(src="#{img}", alt="#{item.title}")
                             div.list-title
                                 strong #{item.title}
         script(src="#{host}/js/ckplayer/ckplayer.js")

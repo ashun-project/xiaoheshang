@@ -228,6 +228,7 @@ router.get('/videos/detail/:id', function (req, res) {
         pageDescrition: '阿顺/阿顺520,ashun520.com有你, ady, ady在线, 韩国伦理, 奸臣 韩国在线观看, 韩国表妹2017在线观看',
         host: 'http://'+req.headers['host'],
         menu: menu,
+        recommond: [],
         terminal: req.terminal,
         video: ''
     }

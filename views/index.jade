@@ -26,7 +26,8 @@ html
                         each vv in item.list
                             a(href="#{host+'/videos/detail/'+vv.id}", title="#{vv.title}在线观看", target="_blank")
                                 div.list-img
-                                    img(src="#{vv.img.split(',')[0]}", alt="#{vv.title}")
+                                    - var img = vv.img.indexOf('http') > -1 ? vv.img : 'https://p2.lw0703.com'+ vv.img;
+                                    img(src="#{img}", alt="#{vv.title}")
                                 div.list-title
                                     strong #{vv.title}
             -else
