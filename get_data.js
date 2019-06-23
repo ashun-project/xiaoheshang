@@ -5,7 +5,7 @@ var mysql = require('mysql');
 var pageNum = 0;
 var dtNum = 0;
 var arr = [];
-var resour = 'http://xhgtv.com';
+var resour = 'http://xhgsp9.com';
 var items = [
     { "url": "/?m=vod-type-id-5.html", "type": "youma", num: 1 },//61
     { "url": "/?m=vod-type-id-6.html", "type": "wuma", num: 1 }, //110
@@ -125,17 +125,24 @@ function getList() {
         } else {
             pageNum++
             if (pageNum === items.length) {
-                if (arr.length) {
-                    var nArr = JSON.parse(JSON.stringify(arr));
-                    arr = [];
-                    pageNum = 0;
-                    dtNum = 0;
-                    listArr(nArr);
-                }
-            } else {
-                dtNum = 0;
-                getList();
+                pageNum = 0;
             }
+            var nArr = JSON.parse(JSON.stringify(arr));
+            arr = [];
+            dtNum = 0;
+            listArr(nArr);
+            // if (pageNum === items.length) {
+            //     if (arr.length) {
+            //         var nArr = JSON.parse(JSON.stringify(arr));
+            //         arr = [];
+            //         pageNum = 0;
+            //         dtNum = 0;
+            //         listArr(nArr);
+            //     }
+            // } else {
+            //     dtNum = 0;
+            //     getList();
+            // }
         }
     }, function () {
         getList();
@@ -149,7 +156,7 @@ function listArr(list) {
         var timeS = new Date(date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' 23:00:00').getTime();
         setTimeout(function () {
             getList();
-        }, timeS - date.getTime() + (6 * 60 * 60 * 1000)); // 8小时后重新调  
+        }, 8 * 60 * 60 * 1000); // 8小时后重新调  timeS - date.getTime() + (6 * 60 * 60 * 1000)
     } else {
         var sql = 'select * from list_data where url ="' + list[dtNum].url + '"';
         pool.getConnection(function (err, conn) {

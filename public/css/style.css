@@ -295,6 +295,48 @@ h3.suiji{
     height: 18px;
     line-height: 18px;
 }
+/* 定义keyframe动画，命名为blink */
+@keyframes blink{
+    0%{opacity: 1;}
+    100%{opacity: .8;} 
+  }
+  /* 添加兼容性前缀 */
+  @-webkit-keyframes blink {
+      0% { opacity: 1; }
+      100% { opacity: .8; }
+  }
+  @-moz-keyframes blink {
+      0% { opacity: 1; }
+      100% { opacity: .8; }
+  }
+  @-ms-keyframes blink {
+      0% {opacity: 1; } 
+      100% { opacity: 0.8;}
+  }
+  @-o-keyframes blink {
+      0% { opacity: 1; }
+      100% { opacity: 0.8; }
+  }
+  h3.update-tip{
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    background: #ffff;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    font-size: 26px;
+    text-align: center;
+    color: #dd4814;
+    padding: 30px 0;
+    animation: blink 0.2s linear infinite;  
+    /* 其它浏览器兼容性前缀 */
+    -webkit-animation: blink .2s linear infinite;
+    -moz-animation: blink .2s linear infinite;
+    -ms-animation: blink .2s linear infinite;
+    -o-animation: blink .2s linear infinite;
+}
 @media screen and (max-width: 1200px) {
     .search .search-cont{
         padding: 10px 8px;

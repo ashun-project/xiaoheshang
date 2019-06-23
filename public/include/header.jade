@@ -23,6 +23,9 @@ div.header
             a(href="#{item.url}", class="#{item.url === type? 'active' : ''}", title="#{item.name}") #{item.name}
         -if(host.indexOf('app') === -1)
             a(href="#{host}/app/andriod.apk") 安卓app下载
+    h3.update-tip
+        span 此网站不再更新,请使用安卓手机下载APP观看：
+        a(href="#{host}/app/andriod.apk") 立即下载
     div.shadow
     script.
         var myMenu = document.getElementById('show-menu');
