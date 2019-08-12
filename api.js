@@ -73,6 +73,16 @@ router.all('*', function (req, res, next) {
 // 首页
 router.get('/', function (req, res) {
     var sql = 'select a.* from (select * from list_data where type = "youma" order by id desc limit 4) a union all select b.* from (select * from list_data where type = "oumei" order by id desc limit 4) b union all select c.* from (select * from list_data where type = "dongman" order by id desc limit 4) c';
+    try {
+        var friendly = JSON.parse(fs.readFileSync('./public/users.json').toString()).data;
+    } catch (e) {
+        var friendly = [];
+    }
+    // var fs.readFileSync('./public/users.json',function(err,data){
+    //     var person = data.toString();//将二进制的数据转换为字符串
+    //     console.log(JSON.parse(person), '====')
+    //     friendly = JSON.parse(person).data;//将字符串转换为json对象
+    // })
     pool.getConnection(function (err, conn) {
         if (err) console.log("POOL-index ==> " + err);
         conn.query(sql, function (err, result) {
@@ -84,6 +94,7 @@ router.get('/', function (req, res) {
                 menu: menu,
                 type: '/',
                 terminal: req.terminal,
+                friendly: friendly,
                 result: ''
             }
             if (err) {
@@ -265,6 +276,60 @@ router.get('/videos/detail/:id', function (req, res) {
     })
 })
 
+router.get('/friendly', function (req, res) {
+    fs.readFile('./public/users.json',function(err,data){
+        var person = data.toString();//将二进制的数据转换为字符串
+        person = JSON.parse(person);//将字符串转换为json对象
+        res.render('friendly', person);
+    })
+    
+});
+
+router.post('/friendly/del', function (req, res) {
+    var obj = req.body;
+    fs.readFile('./public/users.json',function(err,data){
+        var person = data.toString();//将二进制的数据转换为字符串
+        person = JSON.parse(person);//将字符串转换为json对象
+        for(var i = 0; i < person.data.length; i++){
+            if(obj.id == person.data[i].id){
+                person.data.splice(i,1);
+            }
+        }
+        var str = JSON.stringify(person);
+        //然后再把数据写进去
+        fs.writeFile('./public/users.json',str,function(err){
+            if(err){
+                console.error(err);
+            }
+        })
+        res.json({code: 200, msg: '删除成功'})
+    })
+})
+router.post('/friendly/add', function (req,res){
+    var params = req.body
+    //现将json文件读出来
+    fs.readFile('./public/users.json',function(err,data){
+        if(err){
+            return console.error(err);
+        }
+        var person = data.toString();//将二进制的数据转换为字符串
+        var id = 1;
+        person = JSON.parse(person);//将字符串转换为json对象
+        for (var i = 0; i < person.data.length; i++) {
+            if (person.data[i].id >= id) {
+                id = person.data[i].id + 1
+            }
+        }
+        params.id = id
+        person.data.push(params);//将传来的对象push进数组对象中
+        var str = JSON.stringify(person);//因为nodejs的写入文件只认识字符串或者二进制数，所以把json对象转换成字符串重新写入json文件中
+        fs.writeFile('./public/users.json',str,function(err){
+            if(err){r(err);
+            }
+        })
+        res.json({code: 200, msg: '添加成功', data: params})
+    })
+})
 
 router.get('*', function (req, res, next) {
     var listObj = {
