@@ -276,7 +276,7 @@ router.get('/videos/detail/:id', function (req, res) {
     })
 })
 
-router.get('/friendly', function (req, res) {
+router.get('/friendly666', function (req, res) {
     fs.readFile('./public/users.json',function(err,data){
         var person = data.toString();//将二进制的数据转换为字符串
         person = JSON.parse(person);//将字符串转换为json对象
