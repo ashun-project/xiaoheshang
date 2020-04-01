@@ -7,26 +7,19 @@ var router = express.Router();
 var num = 0;
 var menu = [
     { "url": "/", "name": "首页"},
-    { "url": "/videos/youma/", "name": "日本有码" },
-    { "url": "/videos/wuma/", "name": "日本无码" },
-    { "url": "/videos/qingse/", "name": "韩国情色" }, 
-    { "url": "/videos/zimu/", "name": "中文字幕" },
-    { "url": "/videos/qiangjianluanlun/", "name": "强奸乱伦" }, 
-    { "url": "/videos/shisheng/", "name": "制服师生" },
-    { "url": "/videos/gaoqing/", "name": "JAVHD高清"}, 
-    { "url": "/videos/oumei/", "name": "欧美性爱" }, 
-    { "url": "/videos/linglei/", "name": "变态另类" },
-    { "url": "/videos/guochangmingren/", "name": "国产名人" }, 
-    { "url": "/videos/tongshi/", "name": "职场同事" }, 
-    { "url": "/videos/chezheng/", "name": "野合车震" }, 
-    { "url": "/videos/qunjiao/", "name": "自慰群交" }, 
-    { "url": "/videos/guochangluanlun/", "name": "国产乱伦" }, 
-    { "url": "/videos/mutie/", "name": "空姐模特" }, 
-    { "url": "/videos/renqi/", "name": "娇妻素人" }, 
-    { "url": "/videos/shaofu/", "name": "美熟少妇" }, 
-    { "url": "/videos/xuesheng/", "name": "女神学生" }, 
-    { "url": "/videos/sanji/", "type": "sanji", "name": "三级伦理" },
-    { "url": "/videos/dongman/", "name": "动漫卡通" }
+    { "url": "/videos/guocai/", "type": "guocai", "name": "国产精品", num: 1 },//868
+    { "url": "/?m=vod-type-id-3.html", "type": "oumei", "name": "欧美", num: 1 }, //110
+    { "url": "/?m=vod-type-id-4.html", "type": "dongman", "name": "动漫", num: 1 }, //21
+    { "url": "/?m=vod-type-id-5.html", "type": "wuma", "name": "无码", num: 1 }, //139
+    { "url": "/?m=vod-type-id-7.html", "type": "zhonggwen", "name": "中文字幕", num: 1 },//31 
+    { "url": "/?m=vod-type-id-8.html", "type": "juru", "name": "巨乳", num: 1 }, //18
+    { "url": "/?m=vod-type-id-9.html", "type": "meishaonv", "name": "美少女", num: 1 }, //3
+    { "url": "/?m=vod-type-id-10.html", "type": "dujia", "name": "DMM独家", num: 1 }, //120
+    { "url": "/?m=vod-type-id-16.html", "type": "hey", "name": "Hey动画", num: 1 },//3
+    { "url": "/?m=vod-type-id-17.html", "type": "HEYZO", "name": "HEYZO", num: 1 }, //36
+    { "url": "/?m=vod-type-id-18.html", "type": "caocui", "name": "潮吹", num: 1 }, //30
+    { "url": "/?m=vod-type-id-19.html", "type": "kojiao", "name": "口交", num: 1 }, //21
+    { "url": "/?m=vod-type-id-20.html", "type": "shouci", "name": "首次亮相", num: 1 }, //38
 ];
 var getIp = function (req) {
     var ip = req.headers['x-real-ip'] ||
@@ -46,16 +39,6 @@ var pool = mysql.createPool({
     database: 'xiaoheshang'
 });
 
-// 缩略图
-// const command = `ffmpeg -i ${input} -r 1 -s WxH -f image2 ${output} -vframes 1`;
-//     return new Promise((resolve,reject)=>{
-//         exec(command, (error, stdout, stderr) => {
-//         if(error) return reject(error);
-//         if(stderr) return reject(stderr);
-//         resolve(output);
-//         });
-//     })
-
 // 路由拦截
 router.all('*', function (req, res, next) {
     var userAgent = req.headers["user-agent"] || '';
@@ -72,17 +55,7 @@ router.all('*', function (req, res, next) {
 })
 // 首页
 router.get('/', function (req, res) {
-    var sql = 'select a.* from (select * from list_data where type = "youma" order by id desc limit 4) a union all select b.* from (select * from list_data where type = "oumei" order by id desc limit 4) b union all select c.* from (select * from list_data where type = "dongman" order by id desc limit 4) c';
-    try {
-        var friendly = JSON.parse(fs.readFileSync('./public/users.json').toString()).data;
-    } catch (e) {
-        var friendly = [];
-    }
-    // var fs.readFileSync('./public/users.json',function(err,data){
-    //     var person = data.toString();//将二进制的数据转换为字符串
-    //     console.log(JSON.parse(person), '====')
-    //     friendly = JSON.parse(person).data;//将字符串转换为json对象
-    // })
+    var sql = 'select a.* from (select * from list_data where type = "zhonggwen" order by id desc limit 4) a union all select b.* from (select * from list_data where type = "oumei" order by id desc limit 4) b union all select c.* from (select * from list_data where type = "shouci" order by id desc limit 4) c';
     pool.getConnection(function (err, conn) {
         if (err) console.log("POOL-index ==> " + err);
         conn.query(sql, function (err, result) {
@@ -94,25 +67,24 @@ router.get('/', function (req, res) {
                 menu: menu,
                 type: '/',
                 terminal: req.terminal,
-                friendly: friendly,
                 result: ''
             }
             if (err) {
                 res.render('index', listObj);
             } else {
                 var obj = {
-                    youma: [],
+                    zhonggwen: [],
                     oumei: [],
-                    dongman: [],
+                    shouci: [],
                 }
                 var arr = [];
                 for (var i = 0; i < result.length; i++) {
                     obj[result[i].type].push(result[i]);
                 }
                 arr = [
-                    {type: 'youma', list: obj.youma, name: '日本有码'},
+                    {type: 'zhonggwen', list: obj.zhonggwen, name: '中文字幕'},
                     {type: 'oumei', list: obj.oumei, name: '欧美性爱'},
-                    {type: 'dongman', list: obj.dongman, name: '动漫卡通'}
+                    {type: 'shouci', list: obj.shouci, name: '首次亮相'}
                 ]
                 listObj.result = arr;
                 res.render('index', listObj);
@@ -150,7 +122,6 @@ router.get('/videos/:type', function (req, res) {
         sql = 'SELECT * FROM list_data where type = "'+ type[0] +'" and title like "' +'%'+ decodeURI(search[1]) +'%'+ '" order by id desc limit ' + limit;
         count = 'SELECT COUNT(1) FROM list_data where type ="' + type[0] + '" and title like "' +'%'+ decodeURI(search[1]) +'%'+ '"';
     }
-    // console.log(sql, count)
     pool.getConnection(function (err, conn) {
         if (err) console.log("POOL-list ==> " + err); 
         conn.query(sql, function (err, result) {

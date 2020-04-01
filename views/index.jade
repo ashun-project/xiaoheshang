@@ -33,8 +33,6 @@ html
             -else
                 a(href="#{host}", class="no-more" title="返回首页") 页面出错，请刷新页面或联系管理员！
         div.my-friendly
-            each item in friendly
-                a(href="#{item.url}") #{item.name}
-        //- include ../public/include/friendly.jade
+        include ../public/include/friendly.jade
         include ../public/include/footer.jade
         

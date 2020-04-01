@@ -1,10 +1,11 @@
 div.header-top
     div.cont
-        marquee(scrolldelay="30")
-            span 为防止域名更换, 请记住我们的导航域名 www.xjb520.xyz&nbsp;&nbsp;&nbsp;
-            span 交流QQ群&nbsp;
-                font
-                    a(target="_blank", title="#{pageTitle}交流QQ群" href="https://jq.qq.com/?_wv=1027&amp;k=5j4uiDH", style="color: rgb(255, 103, 56);") 854191436
+        span 为防止域名更换, 请记住我们的永久邮箱 sexlookashun@sina.com&nbsp;&nbsp;&nbsp;
+        //- marquee(scrolldelay="30")
+            //- span 为防止域名更换, 请记住我们的永久邮箱 sexlookashun@sina.com&nbsp;&nbsp;&nbsp;
+            //- span 交流QQ群&nbsp;
+            //-     font
+            //-         a(target="_blank", title="#{pageTitle}交流QQ群" href="https://jq.qq.com/?_wv=1027&amp;k=5j4uiDH", style="color: rgb(255, 103, 56);") 2982501851
 div.guanggao
     a(href="https://349603.cc/850/llh5.html")
         img(src="#{host}/img/guangao.gif", alt="")
@@ -20,12 +21,9 @@ div.header
             img(src="#{host}/img/menu.png", alt="")
     div.cont#menu-cont
         each item in menu
-            a(href="#{item.url}", class="#{item.url === type? 'active' : ''}", title="#{item.name}") #{item.name}
+            a(href="/videos/#{item.type}/", class="#{item.type === type? 'active' : ''}", title="#{item.name}") #{item.name}
         -if(host.indexOf('app') === -1)
-            a(href="#{host}/app/andriod.apk") 安卓app下载
-    h3.update-tip
-        span 此网站不再更新,请使用安卓手机下载APP观看：
-        a(href="#{host}/app/andriod.apk") 立即下载
+            //- a(href="#{host}/app/andriod.apk") 安卓app下载
     div.shadow
     script.
         var myMenu = document.getElementById('show-menu');

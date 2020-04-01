@@ -1,27 +1,72 @@
 script.
-    var friendly = [
-        {id: 1, name: '華人社導航', url: 'http://www.hrs1.xyz'},
-        {id: 2, name: '小萝莉导航', url: 'http://www.xll01.xyz/'},
-        {id: 3, name: '小姐姐导航', url: 'http://www.40cv.cn'},
-        {id: 4, name: 'QQ群小狼友导航网', url: 'http://av.qqqxly.com'},
-        {id: 5, name: '色色导航', url: 'http://www.seadh.top'},
-        {id: 6, name: '69色导航', url: 'http://www.69adh.top'},
-        {id: 7, name: '好色导航', url: 'http://www.hsadh.top'},
-        {id: 8, name: '撸撸导航', url: 'http://www.luadh.top'},
-        {id: 9, name: '久草导航', url: 'http://www.jccadh.top'},
-        {id: 10, name: '奶茶导航', url: 'https://www.2naicha.com'},
-        {id: 11, name: '爆菊导航', url: 'http://www.bjdh.xyz'},
-        {id: 12, name: 'baidu360福利导航', url: 'http://baidu360.me'},
-        {id: 13, name: '操逼逼导航', url: 'http://www.52caobb.top'},
-        {id: 14, name: '久久操精品导航', url: 'http://www.jjcao.xyz'},
-        {id: 15, name: '情不自禁', url: 'http://www.qingbuzijin.ga'},
-        {id: 16, name: '秘密入口', url: 'http://www.mimirukou.net'},
-        {id: 17, name: '奶茶视频', url: 'https://www.naicha4.com'},
-        {id: 18, name: '唯一福利导航', url: 'http://www.vydh.xyz/'},
-        {id: 19, name: '春楼福利导航', url: 'http://www.cldh.xyz/'}
-    ];
-    var aStr = '';
-    for(var a = 0; a < friendly.length; a++){
-        aStr += '<a href="'+ friendly[a].url +'" target="_blank">'+ friendly[a].name +'</a>'
-    }
-    document.querySelector('.my-friendly').innerHTML = aStr;
+    function ajax() {  
+        var ajaxData = {    
+            type: arguments[0].type || "GET",
+                url: arguments[0].url || "",
+                async: arguments[0].async || "true",
+                data: arguments[0].data || null,
+                dataType: arguments[0].dataType || "text",
+                contentType: arguments[0].contentType || "application/x-www-form-urlencoded",
+                beforeSend: arguments[0].beforeSend || function () {},
+                success: arguments[0].success || function () {},
+                error: arguments[0].error || function () {}  
+        }; 
+        ajaxData.beforeSend(); 
+        var xhr = createxmlHttpRequest();   
+        try{
+            xhr.responseType = ajaxData.dataType;  
+        }catch (err) {
+            console.log(err)
+        };
+        xhr.open(ajaxData.type, ajaxData.url, ajaxData.async);   
+        xhr.setRequestHeader("Content-Type", ajaxData.contentType);   
+        xhr.send(convertData(ajaxData.data));   
+        xhr.onreadystatechange = function () {     
+            if (xhr.readyState == 4) {       
+                if (xhr.status == 200) {
+                    ajaxData.success(xhr.response);      
+                } else {        
+                    ajaxData.error();      
+                }     
+            }  
+        } 
+    };
+    function createxmlHttpRequest() {   
+        if (window.ActiveXObject) {     
+            return new ActiveXObject("Microsoft.XMLHTTP");   
+        } else if (window.XMLHttpRequest) {     
+            return new XMLHttpRequest();   
+        } 
+    }; 
+    function convertData(data) {  
+        if (typeof data === 'object') {    
+            var convertResult = "";     
+            for (var c in data) {       
+                convertResult += c + "=" + data[c] + "&";     
+            }     
+            convertResult = convertResult.substring(0, convertResult.length - 1);   
+            return convertResult;  
+        } else {    
+            return data;  
+        }
+    };
+
+
+    ajax({  
+        type: "post",
+          url: "/friendly/list",
+          beforeSend: function () {},
+            //some js code 
+        success: function (response) {
+            var msg = JSON.parse(response);
+            var friendly = msg.list.data;
+            var aStr = '';
+            for(var a = 0; a < friendly.length; a++){
+                aStr += '<a href="'+ friendly[a].url +'" target="_blank">'+ friendly[a].name +'</a>'
+            }
+            document.querySelector('.my-friendly').innerHTML = aStr;
+        },
+        error: function () {    
+           
+        }
+    })

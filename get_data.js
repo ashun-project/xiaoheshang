@@ -5,28 +5,21 @@ var mysql = require('mysql');
 var pageNum = 0;
 var dtNum = 0;
 var arr = [];
-var resour = 'http://xhgsp9.com';
+var resour = 'http://www.msnyxs1.com/';
 var items = [
-    { "url": "/?m=vod-type-id-5.html", "type": "youma", num: 1 },//61
-    { "url": "/?m=vod-type-id-6.html", "type": "wuma", num: 1 }, //110
-    { "url": "/?m=vod-type-id-7.html", "type": "qingse", num: 1 }, //21
-    { "url": "/?m=vod-type-id-8.html", "type": "zimu", "title": "中文字幕", num: 1 }, //139
-    { "url": "/?m=vod-type-id-10.html", "type": "qiangjianluanlun", "title": "强奸乱伦", num: 1 },//31 
-    { "url": "/?m=vod-type-id-11.html", "type": "shisheng", "title": "制服师生", num: 1 }, //18
-    { "url": "/?m=vod-type-id-13.html", "type": "gaoqing", "title": "JAVHD高清", num: 1 }, //3
-    { "url": "/?m=vod-type-id-14.html", "type": "oumei", "title": "欧美性爱", num: 1 }, //120
-    { "url": "/?m=vod-type-id-15.html", "type": "linglei", "title": "变态另类", num: 1 },//3
-    { "url": "/?m=vod-type-id-17.html", "type": "guochangmingren", "title": "国产名人", num: 1 }, //36
-    { "url": "/?m=vod-type-id-18.html", "type": "tongshi", "title": "职场同事", num: 1 }, //30
-    { "url": "/?m=vod-type-id-19.html", "type": "chezheng", "title": "野合车震", num: 1 }, //21
-    { "url": "/?m=vod-type-id-20.html", "type": "qunjiao", "title": "自慰群交", num: 1 }, //38
-    { "url": "/?m=vod-type-id-21.html", "type": "guochangluanlun", "title": "国产乱伦", num: 1 }, //30
-    { "url": "/?m=vod-type-id-22.html", "type": "mutie", "title": "空姐模特", num: 1 }, //27
-    { "url": "/?m=vod-type-id-23.html", "type": "renqi", "title": "娇妻素人", num: 1 }, //167
-    { "url": "/?m=vod-type-id-24.html", "type": "shaofu", "title": "美熟少妇", num: 1 },//47
-    { "url": "/?m=vod-type-id-25.html", "type": "xuesheng", "title": "女神学生", num: 1 },//92
-    { "url": "/?m=vod-type-id-9.html", "type": "sanji", "title": "三级伦理", num: 1 },//26
-    { "url": "/?m=vod-type-id-26.html", "type": "dongman", "title": "动漫卡通", num: 1 }//75
+    { "url": "/?m=vod-type-id-1.html", "type": "guocai", "title": "国产精品", num: 28 },//868
+    { "url": "/?m=vod-type-id-3.html", "type": "oumei", "title": "欧美", num: 6 }, //110
+    { "url": "/?m=vod-type-id-4.html", "type": "dongman", "title": "动漫", num: 6 }, //21
+    { "url": "/?m=vod-type-id-5.html", "type": "wuma", "title": "无码", num: 4 }, //139
+    { "url": "/?m=vod-type-id-7.html", "type": "zhonggwen", "title": "中文字幕", num: 3 },//31 
+    { "url": "/?m=vod-type-id-8.html", "type": "juru", "title": "巨乳", num: 8 }, //18
+    { "url": "/?m=vod-type-id-9.html", "type": "meishaonv", "title": "美少女", num: 10 }, //3
+    { "url": "/?m=vod-type-id-10.html", "type": "dujia", "title": "DMM独家", num: 6 }, //120
+    { "url": "/?m=vod-type-id-16.html", "type": "hey", "title": "Hey动画", num: 7 },//3
+    { "url": "/?m=vod-type-id-17.html", "type": "HEYZO", "title": "HEYZO", num: 7 }, //36
+    { "url": "/?m=vod-type-id-18.html", "type": "caocui", "title": "潮吹", num: 12 }, //30
+    { "url": "/?m=vod-type-id-19.html", "type": "kojiao", "title": "口交", num: 11 }, //21
+    { "url": "/?m=vod-type-id-20.html", "type": "shouci", "title": "首次亮相", num: 11 }, //38
 ]
 
 var ip = [
@@ -108,15 +101,15 @@ function getList() {
     // console.log(urlC)
     // return
     getAjax(urlC).then(function () {
-        var li = $('.row .new-video');
+        var li = $('.listbox ul li');
         var title = '';
         var url = '';
         var img = '';
         dtNum++
         for (var i = 0; i < li.length; i++) {
-            title = $('.v-title a', li[i]).text();
-            url = $('.v-title a', li[i]).attr('href');
-            img = $('a img', li[i]).attr('src');
+            title = $('h3 a', li[i]).text();
+            url = $('h3 a', li[i]).attr('href');
+            img = $('.item-lazy', li[i]).attr('data-echo');
             arr.push({ url: url, title: title, img: img, type: items[pageNum].type });
         }
         if ((items[pageNum].num - dtNum) > 0) {
@@ -124,25 +117,15 @@ function getList() {
             getList();
         } else {
             pageNum++
+            dtNum = 0;
             if (pageNum === items.length) {
                 pageNum = 0;
+                var nArr = JSON.parse(JSON.stringify(arr));
+                arr = [];
+                listArr(nArr);
+            } else {
+                getList();
             }
-            var nArr = JSON.parse(JSON.stringify(arr));
-            arr = [];
-            dtNum = 0;
-            listArr(nArr);
-            // if (pageNum === items.length) {
-            //     if (arr.length) {
-            //         var nArr = JSON.parse(JSON.stringify(arr));
-            //         arr = [];
-            //         pageNum = 0;
-            //         dtNum = 0;
-            //         listArr(nArr);
-            //     }
-            // } else {
-            //     dtNum = 0;
-            //     getList();
-            // }
         }
     }, function () {
         getList();
@@ -176,7 +159,7 @@ function listArr(list) {
                         var sqlL = "INSERT INTO list_data(id,url,title,img,type,video) VALUES (?,?,?,?,?,?)";
                         function getDetail(dUrl) {
                             getAjax(dUrl).then(function () {
-                                var video = $('.container .inputA .form-control').eq(0).val();
+                                var video = $('.play-panel .tips span').eq(0).text();
                                 var infoL = [id, list[dtNum].url, list[dtNum].title, list[dtNum].img, list[dtNum].type, video];
                                 conn.query(sqlL, infoL, function (err, rows, fields) {
                                     if (err) {
@@ -194,7 +177,10 @@ function listArr(list) {
                                 getDetail(dUrl);
                             });
                         }
-                        getDetail(resour+list[dtNum].url);
+                        var numId = list[dtNum].url.replace(/[^\d]/g,'');
+                        var reUrl = '?m=vod-play-id-'+ numId +'-src-1-num-1.html'
+                        // console.log(resour+reUrl)
+                        getDetail(resour+reUrl);
                     }
                 }
             });
