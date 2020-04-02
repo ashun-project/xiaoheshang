@@ -6,20 +6,20 @@ var mysql = require('mysql');
 var router = express.Router();
 var num = 0;
 var menu = [
-    { "url": "/", "name": "首页"},
+    { "url": "/", "type": '/', "name": "首页"},
     { "url": "/videos/guocai/", "type": "guocai", "name": "国产精品", num: 1 },//868
-    { "url": "/?m=vod-type-id-3.html", "type": "oumei", "name": "欧美", num: 1 }, //110
-    { "url": "/?m=vod-type-id-4.html", "type": "dongman", "name": "动漫", num: 1 }, //21
-    { "url": "/?m=vod-type-id-5.html", "type": "wuma", "name": "无码", num: 1 }, //139
-    { "url": "/?m=vod-type-id-7.html", "type": "zhonggwen", "name": "中文字幕", num: 1 },//31 
-    { "url": "/?m=vod-type-id-8.html", "type": "juru", "name": "巨乳", num: 1 }, //18
-    { "url": "/?m=vod-type-id-9.html", "type": "meishaonv", "name": "美少女", num: 1 }, //3
-    { "url": "/?m=vod-type-id-10.html", "type": "dujia", "name": "DMM独家", num: 1 }, //120
-    { "url": "/?m=vod-type-id-16.html", "type": "hey", "name": "Hey动画", num: 1 },//3
-    { "url": "/?m=vod-type-id-17.html", "type": "HEYZO", "name": "HEYZO", num: 1 }, //36
-    { "url": "/?m=vod-type-id-18.html", "type": "caocui", "name": "潮吹", num: 1 }, //30
-    { "url": "/?m=vod-type-id-19.html", "type": "kojiao", "name": "口交", num: 1 }, //21
-    { "url": "/?m=vod-type-id-20.html", "type": "shouci", "name": "首次亮相", num: 1 }, //38
+    { "url": "/videos/oumei/", "type": "oumei", "name": "欧美", num: 1 }, //110
+    { "url": "/videos/dongman/", "type": "dongman", "name": "动漫", num: 1 }, //21
+    { "url": "/videos/wuma/", "type": "wuma", "name": "无码", num: 1 }, //139
+    { "url": "/videos/zhonggwen/", "type": "zhonggwen", "name": "中文字幕", num: 1 },//31 
+    { "url": "/videos/juru/", "type": "juru", "name": "巨乳", num: 1 }, //18
+    { "url": "/videos/meishaonv/", "type": "meishaonv", "name": "美少女", num: 1 }, //3
+    { "url": "/videos/dujia/", "type": "dujia", "name": "DMM独家", num: 1 }, //120
+    { "url": "/videos/hey/", "type": "hey", "name": "Hey动画", num: 1 },//3
+    { "url": "/videos/HEYZO/", "type": "HEYZO", "name": "HEYZO", num: 1 }, //36
+    { "url": "/videos/caocui/", "type": "caocui", "name": "潮吹", num: 1 }, //30
+    { "url": "/videos/kojiao/", "type": "kojiao", "name": "口交", num: 1 }, //21
+    { "url": "/videos/shouci/", "type": "shouci", "name": "首次亮相", num: 1 }, //38
 ];
 var getIp = function (req) {
     var ip = req.headers['x-real-ip'] ||
@@ -41,21 +41,25 @@ var pool = mysql.createPool({
 
 // 路由拦截
 router.all('*', function (req, res, next) {
-    var userAgent = req.headers["user-agent"] || '';
-    var deviceAgent = userAgent.toLowerCase();
-    var agentID = deviceAgent.match(/(iphone|ipod|ipad|android)/);
-    var terminal = '';
-    if (agentID) {
-        terminal = "mobile";
+    // var userAgent = req.headers["user-agent"] || '';
+    // var deviceAgent = userAgent.toLowerCase();
+    // var agentID = deviceAgent.match(/(iphone|ipod|ipad|android)/);
+    // var terminal = '';
+    // if (agentID) {
+    //     terminal = "mobile";
+    // } else {
+    //     terminal = "pc";
+    // }
+    // req.terminal = terminal;
+    if(req.method=="OPTIONS") {
+        res.sendStatus(200);/*让options请求快速返回*/
     } else {
-        terminal = "pc";
+        next();
     }
-    req.terminal = terminal;
-    next();
 })
 // 首页
 router.get('/', function (req, res) {
-    var sql = 'select a.* from (select * from list_data where type = "zhonggwen" order by id desc limit 4) a union all select b.* from (select * from list_data where type = "oumei" order by id desc limit 4) b union all select c.* from (select * from list_data where type = "shouci" order by id desc limit 4) c';
+    var sql = 'select a.* from (select * from list_data where type = "zhonggwen" order by id desc limit 10) a union all select b.* from (select * from list_data where type = "oumei" order by id desc limit 10) b union all select c.* from (select * from list_data where type = "shouci" order by id desc limit 10) c';
     pool.getConnection(function (err, conn) {
         if (err) console.log("POOL-index ==> " + err);
         conn.query(sql, function (err, result) {
@@ -107,20 +111,16 @@ router.get('/videos/:type', function (req, res) {
         host: 'http://'+req.headers['host'],
         menu: menu,
         terminal: req.terminal,
-        type: '/videos/'+type[0]+'/',
+        type: type[0],
         result: []
     }
-    // if (params.length < 2) {
-    //     res.render('list', listObj);
-    //     return;
-    // } 
     var numL = Number(type[1]) || 1;
-    var limit = ((numL - 1) * 12) + ',' + 12;
+    var limit = ((numL - 1) * 15) + ',' + 15;
     var sql = 'SELECT * FROM list_data where type = "'+ type[0] +'" order by id desc limit ' + limit;
     var count = 'SELECT COUNT(1) FROM list_data where type ="' + type[0] + '"';
-    if (search[1]) {
-        sql = 'SELECT * FROM list_data where type = "'+ type[0] +'" and title like "' +'%'+ decodeURI(search[1]) +'%'+ '" order by id desc limit ' + limit;
-        count = 'SELECT COUNT(1) FROM list_data where type ="' + type[0] + '" and title like "' +'%'+ decodeURI(search[1]) +'%'+ '"';
+    if (type[0] == 'search') {
+        sql = 'SELECT * FROM list_data where title like "' +'%'+ decodeURI(search[1]) +'%'+ '" order by id desc limit ' + limit;
+        count = 'SELECT COUNT(1) FROM list_data where title like "' +'%'+ decodeURI(search[1]) +'%'+ '"';
     }
     pool.getConnection(function (err, conn) {
         if (err) console.log("POOL-list ==> " + err); 
@@ -153,9 +153,9 @@ router.get('/videos/:type', function (req, res) {
 })
 function getPage(total, currentPage, type, pSearch) {
     var totalPage = 0;//总页数
-    var pageSize = 12;//每页显示行数
+    var pageSize = 15;//每页显示行数
     var pageUrl = '/videos/' + type;
-    var pageSearch = pSearch? '?search=' + pSearch : '';
+    var pageSearch = (type === 'search') ? '?search=' + pSearch : '';
     //总共分几页
     if(total/pageSize > parseInt(total/pageSize)){
         totalPage=parseInt(total/pageSize)+1;
@@ -230,10 +230,10 @@ router.get('/videos/detail/:id', function (req, res) {
                 if (result[0]) {
                     var video = result[0].video ? result[0].video.split('http')[1] : '';
                     listObj.video = 'http' + video;
-                    listObj.type = '/videos/'+result[0].type+'/';
+                    listObj.type = result[0].type;
                     listObj.pageTitle = result[0].title;
-                    var reNum = Math.floor(Math.random()*(1 - 1000) + 1000);
-                    var recommondSql = 'SELECT * FROM list_data order by id desc limit ' + (reNum + ',' + 4);
+                    var reNum = Math.floor(Math.random()*(1 - 2000) + 2000);
+                    var recommondSql = 'SELECT * FROM list_data order by id desc limit ' + (reNum + ',' + 10);
                     conn.query(recommondSql, function (err, recommondResult) {
                         listObj.recommond = recommondResult;
                         res.render('detail', listObj);

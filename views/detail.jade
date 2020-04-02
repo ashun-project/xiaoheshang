@@ -1,5 +1,5 @@
-doctype html 5
-html
+<!DOCTYPE html>
+html(lang="en")
     head
         meta(charset="utf-8")
         meta(name="viewport", content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover")
@@ -15,28 +15,47 @@ html
         meta(name="apple-mobile-web-app-status-bar-style", content="black")
         meta(name="referrer", content="never")
         title=pageTitle
-        link(rel="stylesheet", type="text/css", href="#{host}/css/style.css?time=83021360")
-    body
+        link(rel="stylesheet", type="text/css", href="#{host}/css/index.css?time=#{new Date().getTime()}")
+        link(rel="stylesheet", href="#{host}/js/DPlayer/DPlayer.min.css")
+    body.detail
         include ../public/include/header.jade
-        div.bodyer
-            h1.video-title #{pageTitle}
-            div.data-detail
+        div.detail-info
+            div.wdh-1100
+                h1.video-title #{pageTitle}
+                div.position-txt
+                    a(href="/") 首页
+                    | &nbsp;&nbsp;»&nbsp;&nbsp;
+                    - var currentPosition = menu.filter(item => item.type == type)[0] || {name: '搜索结果', url: '/'};
+                    a(href="#{currentPosition.url}") #{currentPosition.name}
+                    | &nbsp;&nbsp;»&nbsp;&nbsp;
+                    span #{pageTitle}
+                div.video-tips
+                    span.copyright &nbsp;·&nbsp;温馨提示：如果出现加载失败请
+                        a(style="color: #03A9F4;", href="javascript:void(0)", onclick="location.reload()") 刷新
+                        | 一下哦！
+        div.detail-video
+            div.wdh-1100.bodyer
                 -if(video)
                     input(id="video-url", type="hidden", value="#{video}")
                     div#video
-                    p.ug-down 部分浏览器无法播放，推荐下载chrome浏览器观看
                 -else
                     a(href="#{host}", class="no-more" title="返回首页") 没有查询到数据，返回首页？
-            h3.suiji 随机推荐
-            div.data-list
-                -if(recommond.length)
-                    each item in recommond
-                        a(href="#{host+'/videos/detail/'+item.id}", title="#{item.title}在线观看", target="_blank")
-                            div.list-img
-                                - var img = item.img.indexOf('http') > -1 ? item.img : 'https://p2.lw0703.com'+ item.img;
-                                img(src="#{img}", alt="#{item.title}")
-                            div.list-title
-                                strong #{item.title}
-        script(src="#{host}/js/ckplayer/ckplayer.js")
+                div.guess
+                    svg(t="1585822356149", class="icon", viewBox="0 0 1024 1024", version="1.1", xmlns="http://www.w3.org/2000/svg", p-id="1668", width="30", height="30")
+                        path(d="M294.144 568.864a13.6 13.6 0 0 0 1.344 1.664l154.56 164.928c33.952 39.968 90.72 39.968 125.12-0.48l153.6-164.864a140.16 140.16 0 0 0 3.776-4.032l2.272-2.432a13.536 13.536 0 0 0 1.792-2.368c20.48-25.6 31.392-57.696 31.392-92.832a148.448 148.448 0 0 0-256-102.304 148.448 148.448 0 0 0-256 102.304c0 37.12 14.08 73.408 38.144 100.416zM512 928C282.24 928 96 741.76 96 512S282.24 96 512 96s416 186.24 416 416-186.24 416-416 416z", p-id="1669", fill="#d4237a")
+                    span 除了"
+                        b #{pageTitle}
+                        | "你可能还喜欢：
+                div.data-list
+                    -if(recommond.length)
+                        each item in recommond
+                            a(href="#{host+'/videos/detail/'+item.id}", title="#{item.title}在线观看", target="_blank")
+                                div.list-img
+                                    img(src="#{item.img}", alt="#{item.title}")
+                                div.list-title
+                                    strong #{item.title}
+                div(style="height:20px")
+        script(src="#{host}/js/DPlayer/hls.min.js")
+        script(src="#{host}/js/DPlayer/DPlayer.min.js")
         script(src="#{host}/js/detail.js", type="text/javascript")
         include ../public/include/footer.jade

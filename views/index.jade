@@ -1,5 +1,5 @@
-doctype html 5
-html
+<!DOCTYPE html>
+html(lang="en")
     head
         meta(charset="utf-8")
         meta(name="viewport", content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover")
@@ -14,25 +14,27 @@ html
         meta(name="application-name", content="#{pageDescrition}")
         meta(name="apple-mobile-web-app-status-bar-style", content="black")
         title=pageTitle
-        link(rel="stylesheet", type="text/css", href="#{host}/css/style.css?time=83021360")
+        link(rel="stylesheet", type="text/css", href="#{host}/css/index.css?time=#{new Date().getTime()}")
     body
         include ../public/include/header.jade
-        div.bodyer
+        div.bodyer.wdh-1100
             -if(result)
                 each item in result
-                    h2 #{item.name}
-                        a(href="/videos/#{item.type}/", title="#{item.name}列表") 更多
-                    div.data-list
-                        each vv in item.list
-                            a(href="#{host+'/videos/detail/'+vv.id}", title="#{vv.title}在线观看", target="_blank")
-                                div.list-img
-                                    - var img = vv.img.indexOf('http') > -1 ? vv.img : 'https://p2.lw0703.com'+ vv.img;
-                                    img(src="#{img}", alt="#{vv.title}")
-                                div.list-title
-                                    strong #{vv.title}
+                    div.wrap-list
+                        h2 #{item.name}
+                            a(href="/videos/#{item.type}/", title="#{item.name}列表")
+                                span 更多
+                                svg(t="1585811906816", class="icon", viewBox="0 0 1024 1024", version="1.1", xmlns="http://www.w3.org/2000/svg", p-id="2192", width="16", height="16")
+                                    path(d="M392.533333 243.2l266.666667 270.933333-270.933333 266.666667c-8.533333 8.533333-8.533333 21.333333 0 29.866667 8.533333 8.533333 21.333333 8.533333 29.866666 0L704 529.066667c8.533333-8.533333 8.533333-21.333333 0-29.866667L422.4 213.333333c-8.533333-8.533333-21.333333-8.533333-29.866667 0-8.533333 8.533333-8.533333 21.333333 0 29.866667z", p-id="2193", fill="#333333")
+
+                        div.data-list
+                            each vv in item.list
+                                a(href="#{host+'/videos/detail/'+vv.id}", title="#{vv.title}在线观看", target="_blank")
+                                    div.list-img
+                                        img(src="#{vv.img}", alt="#{vv.title}")
+                                    div.list-title
+                                        strong #{vv.title}
             -else
                 a(href="#{host}", class="no-more" title="返回首页") 页面出错，请刷新页面或联系管理员！
-        div.my-friendly
-        include ../public/include/friendly.jade
         include ../public/include/footer.jade
         

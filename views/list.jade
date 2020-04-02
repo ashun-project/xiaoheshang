@@ -1,5 +1,5 @@
-doctype html 5
-html
+<!DOCTYPE html>
+html(lang="en")
     head
         meta(charset="utf-8")
         meta(name="viewport", content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover")
@@ -14,42 +14,28 @@ html
         meta(name="application-name", content="#{pageDescrition}")
         meta(name="apple-mobile-web-app-status-bar-style", content="black")
         title=pageTitle
-        link(rel="stylesheet", type="text/css", href="#{host}/css/style.css?time=83021360")
+        link(rel="stylesheet", type="text/css", href="#{host}/css/index.css?time=#{new Date().getTime()}")
     body
         include ../public/include/header.jade
-        div.search
-            div.search-cont
-                input(type="text", id="search-value", placeholder="请输入片名，如：国产", onkeyup="getSearchKeyup()")
-                button(onclick="getSearch()") 搜&nbsp;&nbsp;索
-        div.bodyer
-            div.data-list
-                -if(result.length)
-                    each item in result
-                        a(href="#{host+'/videos/detail/'+item.id}", title="#{item.title}在线观看", target="_blank")
-                            div.list-img
-                                - var img = item.img.indexOf('http') > -1 ? item.img : 'https://p2.lw0703.com'+ item.img;
-                                img(src="#{img}", alt="#{item.title}")
-                            div.list-title
-                                strong #{item.title}
-                -else
-                    a(href="#{host}", class="no-more" title="返回首页") 没有查询到数据，返回首页？
-        div.page !{page}
-        script(type="text/javascript").
-            var urlSearch = window.location.href.split('search=');
-            if (urlSearch.length > 1) {
-                document.getElementById('search-value').value = decodeURI(urlSearch[1]);
-            }
-            function getSearch () {
-                var val = document.getElementById('search-value').value;
-                var wLocaltion = window.location;
-                var pathname = wLocaltion.pathname;
-                var host = wLocaltion.host;
-                window.location.href = pathname+'?search='+val;
-            }
-            function getSearchKeyup (e) {
-                var event = e || window.event;
-                if (event.keyCode == "13") {
-                    getSearch();
-                }
-            }
+        div.bodyer.wdh-1100
+            div.wrap-list
+                h2 当前位置：
+                    - var currentMenu = menu.filter(item => item.type == type)[0] ? menu.filter(item => item.type == type)[0] : {name: '搜索结果'};
+                    span #{currentMenu.name}
+                div.data-list
+                    -if(result.length)
+                        each item in result
+                            a(href="#{host+'/videos/detail/'+item.id}", title="#{item.title}在线观看", target="_blank")
+                                div.list-img
+                                    img(src="#{item.img}", alt="#{item.title}")
+                                div.list-title
+                                    strong #{item.title}
+                        a(href="", class="no-cont")
+                        a(href="", class="no-cont")
+                        a(href="", class="no-cont")
+                        a(href="", class="no-cont")
+                    -else
+                        a(href="#{host}", class="no-more" title="返回首页") 没有查询到数据，返回首页？
+        div.wdh-1100.page
+            div.page-cont !{page}
         include ../public/include/footer.jade

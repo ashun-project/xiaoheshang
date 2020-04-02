@@ -1,6 +1,12 @@
-div.footer
-    | 为防止域名更换, 请记住我们的永久邮箱&nbsp;
-    strong sexlookashun@sina.com&nbsp;
+div.footer-wrp
+    -if (type == '/')
+        include ./friendly.jade
+        .line
+    div.wdh-1100
+        div.beizhu
+            p Copyright © 2019 sexbo.xyz All Rights Reserved.
+            p 为防止域名更换, 请记住我们的永久邮箱&nbsp;
+                strong sexlookashun@sina.com&nbsp;
     script.
         (function () {
             var id = "8409388612546995900-10102";

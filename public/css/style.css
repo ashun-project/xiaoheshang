@@ -217,9 +217,11 @@ body{
 }
 .data-detail #video {
     width: 100%;
-    max-width: 600px;
-    height: 400px;
-    background: #333;
+    height: 500px;
+    background-color: #000000;
+    background-image: url(../img/video_loading.gif);
+    background-position: center;
+    background-repeat: no-repeat;
 }
 .data-detail #toubiao{
     display: none;
@@ -378,7 +380,12 @@ h3.suiji{
         padding: 0 5px;
     }
     .data-detail #video {
-        height: 200px;
+        width: 100%;
+        height: 500px;
+        background-color: #000000;
+        background-image: url(../img/video_loading.gif);
+        background-position: center;
+        background-repeat: no-repeat;
     }
     .footer{
         font-size: 12px;
