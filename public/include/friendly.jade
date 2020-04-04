@@ -1,12 +1,6 @@
 div.my-friendly.wdh-1100
     h3 友情连接
-    a(href="http://xjb520.com", target="_blank") 小鸡吧
-    a(href="http://xjb520.com", target="_blank") 小鸡吧
-    a(href="http://xjb520.com", target="_blank") 小鸡吧
-    a(href="http://xjb520.com", target="_blank") 小鸡吧
-    a(href="http://xjb520.com", target="_blank") 小鸡吧
-    a(href="http://xjb520.com", target="_blank") 小鸡吧
-    a(href="http://xjb520.com", target="_blank") 小鸡吧
+    div.friedly-list
 script.
     function ajax() {  
         var ajaxData = {    
@@ -73,7 +67,7 @@ script.
             for(var a = 0; a < friendly.length; a++){
                 aStr += '<a href="'+ friendly[a].url +'" target="_blank">'+ friendly[a].name +'</a>'
             }
-            document.querySelector('.my-friendly').innerHTML = aStr;
+            document.querySelector('.friedly-list').innerHTML = aStr;
         },
         error: function () {    
            

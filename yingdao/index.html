@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+    <title>日本电影导航</title>
+    <meta name="keywords" content="ady导航,草榴导航,黄瓜导航,91导航,波多导航,4虎导航">
+    <meta name="description" content="各种导航，方便带你回家">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body,html{
+            height: 100%;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+        .cont-text{
+            display: none;
+            opacity: 0;
+            visibility: hidden;
+        }
+        .agree{
+            background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALsAAAAkCAYAAADRoEv8AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QTk0NzAwMUNCQzU4MTFFNjlBNThGQ0E4OTUxRjdDRDciIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QTk0NzAwMURCQzU4MTFFNjlBNThGQ0E4OTUxRjdDRDciPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpBOTQ3MDAxQUJDNTgxMUU2OUE1OEZDQTg5NTFGN0NENyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpBOTQ3MDAxQkJDNTgxMUU2OUE1OEZDQTg5NTFGN0NENyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pu4IsygAABHXSURBVHja7FwJeFRF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');
+            background-repeat: no-repeat;
+            width: 187px;
+            height: 36px;
+            margin: 50px auto 0;
+            display: block;
+        }
+        .dialog{
+            width: 90%;
+            max-width: 600px;
+            /* height: 200px; */
+            overflow: hidden;
+            padding: 0 10px;
+            padding-bottom: 30px;
+            box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.79);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.29);
+        }
+        .warningtitle{
+            width: 100%;
+            padding-bottom: 20px;
+            padding-top: 30px;
+            margin: 10px auto;
+            text-align: center;
+            font-size: 22px;
+            color: red;
+            font-weight: bold;
+            border-bottom: 1px solid #999;
+        }
+        .divScroll {
+            height: auto;
+            margin-top: 25px;
+            color: #000;
+            font-size: 16px;
+            overflow-y: auto;
+            line-height: 24px;
+            padding: 0 10px;
+        }
+        .divScroll span{
+            font-size: 13px;
+            color: #615151;
+        }
+        .tips{
+            font-size: 14px;
+            color: #674a4a;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .mark{
+            background: rgba(0, 0, 0, 0.25);;
+            position: fixed;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body id="border">
+    <div class="cont-text">
+        腾讯网从2003年创立至今，已经成为集新闻信息，区域垂直生活服务、社会化媒体资讯和产品为一体的互联网媒体平台。腾讯网下设新闻、科技、财经、娱乐、体育、汽车、时尚等多个频道，充分满足用户对不同类型资讯的需求。同时专注不同领域内容，打造精品栏目，并顺应技术发展趋势，推出网络直播等创新形式，改变了用户获取资讯的方式和习惯。
+    </div>
+    <div class="dialog">
+        <div class="warningtitle">温馨 &nbsp;提示</div>
+        <div class="divScroll">
+            请问你成年了吗？ 
+            Are you over 18 years old？<br>
+            <span>
+                如果不满足条件请您离开
+            </span>
+        </div>
+        <button class="agree" id="goin"></button>
+        <p class="tips">永久邮箱：sexlookashun@sina.com</p>
+    </div>
+    <div class="mark"></div>
+    <script>
+        var border = document.getElementById('border');
+        var goin = document.getElementById('goin');
+        var arr = ["h", "t", "t", "p", ":", "/", "/", "w", "w", "w", ".", "a", "s", "h", "u", "n", "1", ".", "x", "y", "z"];
+        border.style.backgroundImage = "url(bk.png)";
+        goin.addEventListener('click', function() {
+            window.location.href = arr.join('');
+        })
+    </script>
+</body>
+</html>

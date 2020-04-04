@@ -115,7 +115,7 @@ router.get('/videos/:type', function (req, res) {
         result: []
     }
     var numL = Number(type[1]) || 1;
-    var limit = ((numL - 1) * 15) + ',' + 15;
+    var limit = ((numL - 1) * 20) + ',' + 20;
     var sql = 'SELECT * FROM list_data where type = "'+ type[0] +'" order by id desc limit ' + limit;
     var count = 'SELECT COUNT(1) FROM list_data where type ="' + type[0] + '"';
     if (type[0] == 'search') {
@@ -153,7 +153,7 @@ router.get('/videos/:type', function (req, res) {
 })
 function getPage(total, currentPage, type, pSearch) {
     var totalPage = 0;//总页数
-    var pageSize = 15;//每页显示行数
+    var pageSize = 20;//每页显示行数
     var pageUrl = '/videos/' + type;
     var pageSearch = (type === 'search') ? '?search=' + pSearch : '';
     //总共分几页
