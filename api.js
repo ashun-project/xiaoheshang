@@ -59,7 +59,7 @@ router.all('*', function (req, res, next) {
 })
 // 首页
 router.get('/', function (req, res) {
-    var sql = 'select a.* from (select * from list_data where type = "zhonggwen" order by id desc limit 10) a union all select b.* from (select * from list_data where type = "oumei" order by id desc limit 10) b union all select c.* from (select * from list_data where type = "shouci" order by id desc limit 10) c';
+    var sql = 'select a.* from (select * from list_data where type = "zhonggwen" order by id desc limit 10) a union all select b.* from (select * from list_data where type = "dongman" order by id desc limit 10) b union all select c.* from (select * from list_data where type = "shouci" order by id desc limit 10) c';
     pool.getConnection(function (err, conn) {
         if (err) console.log("POOL-index ==> " + err);
         conn.query(sql, function (err, result) {
@@ -78,7 +78,7 @@ router.get('/', function (req, res) {
             } else {
                 var obj = {
                     zhonggwen: [],
-                    oumei: [],
+                    dongman: [],
                     shouci: [],
                 }
                 var arr = [];
@@ -87,7 +87,7 @@ router.get('/', function (req, res) {
                 }
                 arr = [
                     {type: 'zhonggwen', list: obj.zhonggwen, name: '中文字幕'},
-                    {type: 'oumei', list: obj.oumei, name: '欧美性爱'},
+                    {type: 'dongman', list: obj.dongman, name: '动漫'},
                     {type: 'shouci', list: obj.shouci, name: '首次亮相'}
                 ]
                 listObj.result = arr;
